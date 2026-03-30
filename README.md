@@ -16,6 +16,11 @@ Drive Video Link: [https://drive.google.com/drive/folders/1A10LJTEiwWwqEu_Wcd4Ad
 | **Peak Load** | 50 | 30s | 93.90ms | 155.17ms | 44.11 req/s | 0.00% |
 | **Stress Load** | 100 | 30s | 112.49ms| 272.02ms | 85.60 req/s | 0.00% |
 
+### Endpoints Tested
+The load test targets the two most critical business flows in the Airline Ticketing System:
+- **`GET /api/v1/flights`**: Simulates users querying available flights. This is a high-read operation that evaluates the efficiency of the flight retrieval and rate-limiting logic.
+- **`POST /api/v1/tickets/buy`**: Simulates authenticated users purchasing a ticket. This is a complex write operation evaluated for concurrency handling, involving database locks, capacity validation, and transactional integrity.
+
 **Performance Under Load:** The API performed very well under all tested scenarios. Even under the Stress Load of 100 concurrent Virtual Users hitting the read and write endpoints simultaneously, the system maintained an error rate of 0.00% across thousands of iterative checks. The `p95` response time stayed comfortably under the 1500ms SLA, peaking at just 272ms, while the throughput scaled perfectly linearly to 85.60 requests per second.
 
 **Observed Bottlenecks:** The slight increase in average response time (from ~84ms to ~112ms) during the Stress test indicates small database lock contention and CPU bottlenecks. Specifically, the `availableSeats` decrementing logic on the database acts as a transactional bottleneck when many VUs try to reserve tickets on the same flight at the same time.
@@ -27,7 +32,7 @@ Drive Video Link: [https://drive.google.com/drive/folders/1A10LJTEiwWwqEu_Wcd4Ad
 The system was developed in accordance with **Service-Oriented Architecture (SOA)** principles:
 - **Controller Layer:** Handles incoming HTTP requests, performs validation, and delegates processing to services.
 - **Service Layer:** Encapsulates all Business Logic.
-- **Repository Layer:** Abstracts database interactions (using Prisma).
+- **Repository Layer:** Abstracts database interactions (using Prisma and Supabase).
 - **Middleware Layer:** Manages cross-cutting concerns such as Authentication (JWT), Authorization (RBAC), and Rate Limiting.
 
 ## Data Model (ER Diagram)
