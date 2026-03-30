@@ -72,7 +72,7 @@ erDiagram
 
 ## Load Testing (k6)
 
-You can run the `tests/load/airline-load-test.js` script to observe the performance results:
+You can run the test script located at [`airline-api/tests/load/airline-load-test.js`](./airline-api/tests/load/airline-load-test.js) to observe the performance results:
 ```bash
 k6 run tests/load/airline-load-test.js
 ```
