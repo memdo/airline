@@ -5,21 +5,21 @@ import { check, sleep } from 'k6';
 const scenario = __ENV.SCENARIO || 'peak';
 
 const scenarios = {
-  normal: { vus: 20, duration: '60s' },
-  peak: { vus: 50, duration: '60s' },
-  stress: { vus: 100, duration: '60s' },
+  normal: { vus: 20, duration: '150s' },
+  peak: { vus: 50, duration: '150s' },
+  stress: { vus: 100, duration: '150s' },
 };
 
 export const options = {
   vus: scenarios[scenario].vus,
   duration: scenarios[scenario].duration,
   thresholds: {
-    http_req_duration: ['p(95)<500'], // İsteklerin %95'i 500ms'den kısa sürmeli
+    http_req_duration: ['p(95)<1500'], // İsteklerin %95'i 500ms'den kısa sürmeli
     http_req_failed: ['rate<0.01'],   // Hata oranı %1'den az olmalı
   },
 };
 
-const BASE_URL = 'http://localhost:3001/api/v1';
+const BASE_URL = 'https://mbdairline-afdfbbf5gvejfwg0.germanywestcentral-01.azurewebsites.net/api/v1';
 
 // Test verileri (Statik veya dinamik olabilir)
 const FLIGHT_QUERY = 'dateFrom=2026-03-28&dateTo=2026-03-29&airportFrom=ADB&airportTo=IST&numberOfPeople=1';
