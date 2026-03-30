@@ -74,7 +74,7 @@ k6 run tests/load/airline-load-test.js
 
 ### Screenshots/Graphs of Load Test Results
 
-![Load Test Result 1](./graph1.png)
+![Load Test Result 1](./graph1.PNG)
 ![Load Test Result 2](./graph2.png)
 ![Load Test Result 3](./graph3.png)
 ![Load Test Result 4](./graph4.png)
