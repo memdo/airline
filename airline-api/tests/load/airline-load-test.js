@@ -2,19 +2,19 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 // Senaryoları ortam değişkenine (SCENARIO) göre belirle
-const scenario = __ENV.SCENARIO || 'peak';
+const scenario = __ENV.SCENARIO || 'stress';
 
 const scenarios = {
-  normal: { vus: 20, duration: '150s' },
-  peak: { vus: 50, duration: '150s' },
-  stress: { vus: 100, duration: '150s' },
+  normal: { vus: 20, duration: '300s' },
+  peak: { vus: 50, duration: '300s' },
+  stress: { vus: 100, duration: '300s' },
 };
 
 export const options = {
   vus: scenarios[scenario].vus,
   duration: scenarios[scenario].duration,
   thresholds: {
-    http_req_duration: ['p(95)<1500'], // İsteklerin %95'i 500ms'den kısa sürmeli
+    http_req_duration: ['p(95)<1500'], // İsteklerin %95'i 1500ms'den kısa sürmeli
     http_req_failed: ['rate<0.01'],   // Hata oranı %1'den az olmalı
   },
 };
@@ -22,7 +22,7 @@ export const options = {
 const BASE_URL = 'https://mbdairline-afdfbbf5gvejfwg0.germanywestcentral-01.azurewebsites.net/api/v1';
 
 // Test verileri (Statik veya dinamik olabilir)
-const FLIGHT_QUERY = 'dateFrom=2026-03-28&dateTo=2026-03-29&airportFrom=ADB&airportTo=IST&numberOfPeople=1';
+const FLIGHT_QUERY = 'dateFrom=2026-03-28&dateTo=2026-03-29&airportFrom=ADB&airportTo=IST&numberOfPeople=90';
 
 export function setup() {
   // 1. Önce uçuşun var olduğundan emin olunmalı (veya manuel eklenmiş olmalı)

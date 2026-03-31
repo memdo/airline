@@ -79,10 +79,8 @@ k6 run tests/load/airline-load-test.js
 
 ### Screenshots/Graphs of Load Test Results
 
-![Overall Performance](./graph1.PNG)
-![Request Durations](./graph2.png)
-![VUs](./graph3.png)
-![Request Rates](./graph4.png)
+![Overall Performance](./graph_1.PNG)
+![Other Graphs](./graph_2.png)
 
 ## Installation and Setup
 
